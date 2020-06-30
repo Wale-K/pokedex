@@ -15,11 +15,11 @@ const Pokedex = styled.div`
 `;
 
 const Divider = styled.div`
-width: 10px;
-height: 600px;
-background-color: orange;
-border: solid 1px black;
-`
+  width: 10px;
+  height: 600px;
+  background-color: orange;
+  border: solid 1px black;
+`;
 
 class App extends React.Component {
   state = { pokemon: null };
@@ -48,14 +48,17 @@ class App extends React.Component {
 
   render() {
     const { pokemon } = this.state;
+    console.log(pokemon);
     return (
       <Pokedex>
         <LeftPage
           name={pokemon ? pokemon.name : ""}
           id={pokemon ? pokemon.id : ""}
+          sprite={pokemon ? pokemon.sprites.front_default : ""}
         />
         <Divider />
         <RightPage
+          stats={pokemon ? pokemon.stats : ""}
           hp={pokemon ? pokemon.stats[0].base_stat : ""}
           attack={pokemon ? pokemon.stats[1].base_stat : ""}
           defense={pokemon ? pokemon.stats[2].base_stat : ""}
@@ -65,9 +68,7 @@ class App extends React.Component {
           typeOne={pokemon ? pokemon.types[0].type.name : ""}
           typeTwo={pokemon ? pokemon.types[1].type.name : ""}
           move={pokemon ? pokemon.moves[0].move.name : ""}
-          
         />
-        {/* <button onClick={this.callApi}>Button</button> */}
       </Pokedex>
     );
   }

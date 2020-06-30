@@ -27,11 +27,10 @@ const LeftPage = (props) => {
     <>
       <LeftPageStyle>
         <Camera />
-        <CurrentPokemon name={props.name} id={props.id} />
-        {/* <Screen>{props.name}</Screen> */}
-        {/* <Screen>Hello</Screen> */}
+        <CurrentPokemon name={props.name} id={props.id} sprite={props.sprite}/>
+ 
         <LeftButtons />
-        {/* <PlusImageStyle src={plusImage} alt="Plus button" /> */}
+        
 
       </LeftPageStyle>
     </>

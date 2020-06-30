@@ -35,7 +35,7 @@ const CurrentPokemon = (props) => {
       <PokemonName>
         <p>{props.name}</p> <p>No. {props.id}</p>
       </PokemonName>
-      <PokemonPicture src={bulbasaur} alt="bulbasaur" />
+      <PokemonPicture src={props.sprite} alt="bulbasaur" />
       <PokemonInformation>
         Bulbasaur is a useless lettuce and nobody would pick this rubbish piece of salad
         as their starter unless they needed to complete the pokedex.
