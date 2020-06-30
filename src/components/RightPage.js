@@ -47,35 +47,20 @@ const RightPage = (props) => {
     <RightPageStyle>
       <BasicInfo>
         <BaseInformation>
-          <div>
-            <p>HP</p>
-            <p>{props.hp}</p>
-          </div>
-          <div>
-            <p>Attack</p>
-            <p> {props.attack}</p>
-          </div>
-          <div>
-            <p>Defense</p>
-            <p> {props.defense}</p>
-          </div>
-          <div>
-            <p>Special Attack</p>
-            <p> {props.spattack}</p>
-          </div>
-          <div>
-            <p>Special Defense</p>
-            <p> {props.spdefense}</p>
-          </div>
-          <div>
-            <p>Speed</p>
-            <p> {props.speed}</p>
-          </div>
+          {props.stats.map((baseStat) => {
+            return (
+              <div key={baseStat.stat.name}>
+                <p>{baseStat.stat.name}</p>
+                <p>{baseStat.base_stat}</p>
+              </div>
+            );
+          })}
         </BaseInformation>
         <Types>
-          <p>Types</p>
-          <p>{props.typeOne}</p>
-          <p>{props.typeTwo}</p>
+          <p>Type</p>
+          {props.types.map((type) => {
+            return <p>{type.type.name}</p>;
+          })}
         </Types>
       </BasicInfo>
       <EvolutionChain />

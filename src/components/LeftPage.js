@@ -4,7 +4,7 @@ import Camera from "./Camera";
 // import Screen from "./Screen";
 import LeftButtons from "./LeftButtons";
 import plusImage from "../images/plus.png";
-import CurrentPokemon from "./CurrentPokemon"
+import CurrentPokemon from "./CurrentPokemon";
 
 const LeftPageStyle = styled.div`
   border: solid 1px black;
@@ -22,16 +22,14 @@ const PlusImageStyle = styled.img`
 `;
 
 const LeftPage = (props) => {
-    console.log(props.name)
+  console.log(props.name);
   return (
     <>
       <LeftPageStyle>
         <Camera />
-        <CurrentPokemon name={props.name} id={props.id} sprite={props.sprite}/>
- 
-        <LeftButtons />
-        
+        <CurrentPokemon name={props.name} id={props.id} sprite={props.sprite} />
 
+        <LeftButtons />
       </LeftPageStyle>
     </>
   );

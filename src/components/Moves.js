@@ -4,10 +4,6 @@ import styled from "styled-components";
 const MovesStyle = styled.div`
   background-color: pink;
   display: flex;
-  
-
-
-  
 `;
 
 const PageDivider = styled.div`
@@ -20,16 +16,13 @@ const PageDivider = styled.div`
     justify-content: space-between;
   }
   text-align: right;
-  
 `;
 
 const MyButtons = styled.div`
-
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 
 const Moves = (props) => {
   return (
@@ -51,12 +44,12 @@ const Moves = (props) => {
           </div>
         </PageDivider>
         <PageDivider>
-            <p>Type: Grass</p>
-            <p>Learn: Lv 0</p>
+          <p>Type: Grass</p>
+          <p>Learn: Lv 0</p>
         </PageDivider>
         <MyButtons>
-        <button>↑</button>
-        <button>↓</button>
+          <button>↑</button>
+          <button>↓</button>
         </MyButtons>
       </MovesStyle>
     </div>

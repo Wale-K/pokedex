@@ -58,16 +58,8 @@ class App extends React.Component {
         />
         <Divider />
         <RightPage
-          stats={pokemon ? pokemon.stats : ""}
-          hp={pokemon ? pokemon.stats[0].base_stat : ""}
-          attack={pokemon ? pokemon.stats[1].base_stat : ""}
-          defense={pokemon ? pokemon.stats[2].base_stat : ""}
-          spattack={pokemon ? pokemon.stats[3].base_stat : ""}
-          spdefense={pokemon ? pokemon.stats[4].base_stat : ""}
-          speed={pokemon ? pokemon.stats[5].base_stat : ""}
-          typeOne={pokemon ? pokemon.types[0].type.name : ""}
-          typeTwo={pokemon ? pokemon.types[1].type.name : ""}
-          move={pokemon ? pokemon.moves[0].move.name : ""}
+          stats={pokemon ? pokemon.stats : []}
+          types={pokemon ? pokemon.type : []}
         />
       </Pokedex>
     );

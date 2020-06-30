@@ -3,7 +3,7 @@ import styled from "styled-components";
 import bulbasaur from "../images/bulbasaur.png";
 import ivysaur from "../images/ivysaur.png";
 import venasaur from "../images/venasaur.png";
-import arrow from "../images/arrow.png"
+import arrow from "../images/arrow.png";
 
 const EvolutionChainStyle = styled.div`
   div + img {
@@ -23,12 +23,10 @@ const EvolutionChainStyle = styled.div`
 `;
 
 const IndividualPokemon = styled.div`
-
-display: flex;
-flex-direction: column;
-text-align: center;
-
-`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
 
 const EvolutionChain = (props) => {
   return (
