@@ -27,9 +27,6 @@ const LeftPage = (props) => {
         <Camera />
         <CurrentPokemon
           allPokemon={props.allPokemon}
-          name={props.name}
-          id={props.id}
-          sprite={props.sprite}
           bio={props.bio}
           renderPokemonName={props.renderPokemonName}
           currentPokemonIndex={props.currentPokemonIndex}

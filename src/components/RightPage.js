@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Moves from "./Moves";
 import EvolutionChain from "./EvolutionChain";
+import axios from "axios";
 
 const RightPageStyle = styled.div`
   border: solid 1px black;
@@ -43,13 +44,41 @@ const BasicInfo = styled.div`
 `;
 
 class RightPage extends React.Component {
-  state = { pokemonIndex: 0 };
+  state = { pokemonIndex: 0, stats: [], type: [] };
+
+  getBaseStat = () => {
+    if (this.props.currentPokemonUrl !== "") {
+      axios.get(this.props.currentPokemonUrl).then((response) => {
+        this.setState({
+          stats: response.data.stats,
+        });
+      });
+    }
+  };
+
+  getType = () => {
+    if (this.props.currentPokemonUrl !== "") {
+      axios.get(this.props.currentPokemonUrl).then((response) => {
+        this.setState({
+          type: response.data.types,
+        });
+      });
+    }
+  };
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.currentPokemonUrl !== this.props.currentPokemonUrl) {
+      this.getBaseStat();
+      this.getType();
+    }
+  };
+
   render() {
     return (
       <RightPageStyle>
         <BasicInfo>
           <BaseInformation>
-            {this.props.stats.map((baseStat) => {
+            {this.state.stats.map((baseStat) => {
               return (
                 <div key={baseStat.stat.name}>
                   <p>{baseStat.stat.name}</p>
@@ -60,7 +89,7 @@ class RightPage extends React.Component {
           </BaseInformation>
           <Types>
             <p>Type</p>
-            {this.props.type.map((type) => {
+            {this.state.type.map((type) => {
               return <p key={type.type.name}>{type.type.name}</p>;
             })}
           </Types>

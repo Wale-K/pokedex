@@ -9,16 +9,18 @@ const PokemonName = styled.div`
 `;
 
 const PokemonPicture = styled.img`
-  height: 100px;
-  width: 100px;
-  margin: 20px 0 0 150px; // I need this to be in the centre.
+  height: 200px;
+  width: auto;
+  // margin: 20px 0 0 150px; // I need this to be in the centre.
+  margin: 0 auto;
 `;
 
 const CurrentPokemonStyle = styled.div`
   background-color: purple;
-  height: 200px;
   width: 400px;
   align-content: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PokemonInformation = styled.div`
@@ -34,17 +36,17 @@ const MyButtons = styled.div`
 
 class CurrentPokemon extends React.Component {
   // state = { bio: "", currentPokemonIndex: 0 };
-  state = { bio: "", currentPokemonId: "", currentPokemonSprite: "" };
+  state = { bio: "bio", currentPokemonId: "", currentPokemonSprite: "" };
 
-  getBio = () => {
-    if (this.props.bio !== "") {
-      axios.get(this.props.bio).then((response) => {
-        this.setState({
-          bio: response.data.flavor_text_entries[0].flavor_text,
-        });
-      });
-    }
-  };
+  // getBio = () => {
+  //   if (this.props.currentPokemonUrl !== "") {
+  //     axios.get(this.props.currentPokemonUrl).then((response) => {
+  //       this.setState({
+  //         bio: response.data.flavor_text_entries[0].flavor_text,
+  //       });
+  //     });
+  //   }
+  // };
 
   getCurrentPokemonId = () => {
     if (this.props.currentPokemonUrl !== "") {
@@ -70,8 +72,8 @@ class CurrentPokemon extends React.Component {
   componentDidUpdate = (prevProps) => {
     if (prevProps.currentPokemonUrl !== this.props.currentPokemonUrl) {
       this.getCurrentPokemonSprite();
-      this.getBio();
       this.getCurrentPokemonId();
+      // this.getBio();
     }
   };
 

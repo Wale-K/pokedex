@@ -22,16 +22,15 @@ const Divider = styled.div`
 `;
 
 class App extends React.Component {
-  state = { pokemon: null, allPokemon: null, currentPokemonIndex: 600 };
+  state = { pokemon: null, allPokemon: null, currentPokemonIndex: 5 };
 
-  // componentDidMount = () => {
-  //   axios
-  //     .get("https://pokeapi.co/api/v2/pokemon/bulbasaur")
-  //     .then((response) => {
-  //       this.setState({ pokemon: response.data });
-  //     });
-  // };
   componentDidMount = () => {
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon/bulbasaur")
+      .then((response) => {
+        this.setState({ pokemon: response.data });
+      });
+
     axios
       .get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=984")
       .then((response) => {
@@ -73,9 +72,6 @@ class App extends React.Component {
     return (
       <Pokedex>
         <LeftPage
-          allPokemon={allPokemon ? allPokemon : ""}
-          name={pokemon ? pokemon.name : ""}
-          sprite={pokemon ? pokemon.sprites.front_default : ""}
           bio={pokemon ? pokemon.species.url : ""}
           renderPokemonName={this.renderPokemonName}
           getNextPokemon={this.getNextPokemon}
@@ -92,6 +88,11 @@ class App extends React.Component {
           stats={pokemon ? pokemon.stats : []}
           type={pokemon ? pokemon.types : []}
           moves={pokemon ? pokemon.moves : ""}
+          currentPokemonUrl={
+            allPokemon
+              ? allPokemon.results[this.state.currentPokemonIndex].url
+              : ""
+          }
         />
       </Pokedex>
     );
