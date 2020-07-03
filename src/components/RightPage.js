@@ -42,31 +42,34 @@ const BasicInfo = styled.div`
   display: flex;
 `;
 
-const RightPage = (props) => {
-  return (
-    <RightPageStyle>
-      <BasicInfo>
-        <BaseInformation>
-          {props.stats.map((baseStat) => {
-            return (
-              <div key={baseStat.stat.name}>
-                <p>{baseStat.stat.name}</p>
-                <p>{baseStat.base_stat}</p>
-              </div>
-            );
-          })}
-        </BaseInformation>
-        <Types>
-          <p>Type</p>
-          {props.types.map((type) => {
-            return <p>{type.type.name}</p>;
-          })}
-        </Types>
-      </BasicInfo>
-      <EvolutionChain />
-      <Moves move={props.move} />
-    </RightPageStyle>
-  );
-};
+class RightPage extends React.Component {
+  state = { pokemonIndex: 0 };
+  render() {
+    return (
+      <RightPageStyle>
+        <BasicInfo>
+          <BaseInformation>
+            {this.props.stats.map((baseStat) => {
+              return (
+                <div key={baseStat.stat.name}>
+                  <p>{baseStat.stat.name}</p>
+                  <p>{baseStat.base_stat}</p>
+                </div>
+              );
+            })}
+          </BaseInformation>
+          <Types>
+            <p>Type</p>
+            {this.props.type.map((type) => {
+              return <p key={type.type.name}>{type.type.name}</p>;
+            })}
+          </Types>
+        </BasicInfo>
+        <EvolutionChain />
+        <Moves moves={this.props.moves} />
+      </RightPageStyle>
+    );
+  }
+}
 
 export default RightPage;

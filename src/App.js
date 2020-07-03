@@ -22,44 +22,76 @@ const Divider = styled.div`
 `;
 
 class App extends React.Component {
-  state = { pokemon: null };
+  state = { pokemon: null, allPokemon: null, currentPokemonIndex: 600 };
 
-  callApi = () => {
-    console.log(1, "hello");
-    const pikachu = axios
-      .get("https://pokeapi.co/api/v2/pokemon/pikachu")
-      .then((response) => {
-        console.log(2, response);
-      });
-    console.log(3, pikachu);
-    setTimeout(() => {
-      console.log(3.5, "wait");
-    }, 1);
-    console.log(4, "bye");
-  };
-
+  // componentDidMount = () => {
+  //   axios
+  //     .get("https://pokeapi.co/api/v2/pokemon/bulbasaur")
+  //     .then((response) => {
+  //       this.setState({ pokemon: response.data });
+  //     });
+  // };
   componentDidMount = () => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon/bulbasaur")
+      .get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=984")
       .then((response) => {
-        this.setState({ pokemon: response.data });
+        this.setState({ allPokemon: response.data });
       });
+  };
+
+  renderPokemonName = () => {
+    if (this.state.allPokemon !== null) {
+      if (this.state.allPokemon.results !== undefined) {
+        return this.state.allPokemon.results[this.state.currentPokemonIndex]
+          .name;
+      }
+    }
+  };
+
+  getNextPokemon = () => {
+    if (
+      this.state.currentPokemonIndex !==
+      this.state.allPokemon.results.length - 1
+    )
+      this.setState((prevState) => {
+        return { currentPokemonIndex: prevState.currentPokemonIndex + 1 };
+      });
+  };
+
+  getPreviousPokemon = () => {
+    if (this.state.currentPokemonIndex !== 0) {
+      this.setState((prevState) => {
+        return { currentPokemonIndex: prevState.currentPokemonIndex - 1 };
+      });
+    }
   };
 
   render() {
     const { pokemon } = this.state;
-    console.log(pokemon);
+    const { allPokemon } = this.state;
+
     return (
       <Pokedex>
         <LeftPage
+          allPokemon={allPokemon ? allPokemon : ""}
           name={pokemon ? pokemon.name : ""}
-          id={pokemon ? pokemon.id : ""}
           sprite={pokemon ? pokemon.sprites.front_default : ""}
+          bio={pokemon ? pokemon.species.url : ""}
+          renderPokemonName={this.renderPokemonName}
+          getNextPokemon={this.getNextPokemon}
+          getPreviousPokemon={this.getPreviousPokemon}
+          currentPokemonIndex={this.state.currentPokemonIndex}
+          currentPokemonUrl={
+            allPokemon
+              ? allPokemon.results[this.state.currentPokemonIndex].url
+              : ""
+          }
         />
         <Divider />
         <RightPage
           stats={pokemon ? pokemon.stats : []}
-          types={pokemon ? pokemon.type : []}
+          type={pokemon ? pokemon.types : []}
+          moves={pokemon ? pokemon.moves : ""}
         />
       </Pokedex>
     );

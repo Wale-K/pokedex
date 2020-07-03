@@ -24,59 +24,71 @@ const MyButtons = styled.div`
   justify-content: space-around;
 `;
 
-const Moves = (props) => {
-  return (
-    <div>
-      {props.move}
-      <MovesStyle>
-        <PageDivider>
-          <div>
-            <p>Accuracy</p>
-            <p>100</p>
-          </div>
-          <div>
-            <p>Power</p>
-            <p>80</p>
-          </div>
-          <div>
-            <p>PP</p>
-            <p>10</p>
-          </div>
-        </PageDivider>
-        <PageDivider>
-          <p>Type: Grass</p>
-          <p>Learn: Lv 0</p>
-        </PageDivider>
-        <MyButtons>
-          <button>↑</button>
-          <button>↓</button>
-        </MyButtons>
-      </MovesStyle>
-    </div>
+class Moves extends React.Component {
+  state = { movesIndex: 0 };
 
-    // <MovesStyle>
-    //   <p>{props.move}</p>
-    //   <div>
-    //     <div>
-    //       <p>Accuracy</p>
-    //       <p>100</p>
-    //     </div>
-    //     <div>
-    //       <p>Power</p>
-    //       <p>80</p>
-    //     </div>
-    //     <div>
-    //       <p>PP</p>
-    //       <p>10</p>
-    //     </div>
-    //   </div>
+  renderMove = () => {
+    if (this.props.moves[this.state.movesIndex] !== undefined) {
+      return this.props.moves[this.state.movesIndex].move.name;
+    }
+  };
 
-    //   <div>
-    //     <p>Type: Grass</p>
-    //     <p>Learn: Lv 0</p>
-    //   </div>
-    // </MovesStyle>
-  );
-};
+  getNextPokemonMove = () => {
+    if (this.state.movesIndex !== this.props.moves.length - 1) {
+      this.setState((prevState) => {
+        return { movesIndex: prevState.movesIndex + 1 };
+      });
+    }
+  };
+
+  getPreviousPokemonMove = () => {
+    if (this.state.movesIndex !== 0) {
+      this.setState((prevState) => {
+        return { movesIndex: prevState.movesIndex - 1 };
+      });
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <MovesStyle>
+          {this.renderMove()}
+          <p>Learned at Level:&nbsp;</p>
+          <p>
+            {this.props.moves[this.state.movesIndex]
+              ? this.props.moves[this.state.movesIndex].version_group_details[0]
+                  .level_learned_at
+              : ""}
+          </p>
+
+          {/* <MovesStyle>
+          <PageDivider>
+            <div>
+              
+              <p>100</p>
+            </div>
+            <div>
+              <p>Power</p>
+              <p>80</p>
+            </div>
+            <div>
+              <p>PP</p>
+              <p>10</p>
+            </div>
+          </PageDivider>
+          <PageDivider>
+            <p>Type: Grass</p>
+            <p>Learn: Lv 0</p>
+          </PageDivider> */}
+          <MyButtons>
+            <button onClick={this.getNextPokemonMove}>↑</button>
+            <button onClick={this.getPreviousPokemonMove}>↓</button>
+          </MyButtons>
+        </MovesStyle>
+      </div>
+    );
+  }
+}
 
 export default Moves;
