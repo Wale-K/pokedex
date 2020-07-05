@@ -22,77 +22,62 @@ const Divider = styled.div`
 `;
 
 class App extends React.Component {
-  state = { pokemon: null, allPokemon: null, currentPokemonIndex: 5 };
+  state = { pokemon: null, index: 6 };
 
   componentDidMount = () => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/bulbasaur")
-      .then((response) => {
-        this.setState({ pokemon: response.data });
-      });
-
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=984")
-      .then((response) => {
-        this.setState({ allPokemon: response.data });
-      });
+    axios.get(`https://pokeapi.co/api/v2/pokemon/6`).then((response) => {
+      this.setState({ pokemon: response.data });
+    });
   };
 
-  renderPokemonName = () => {
-    if (this.state.allPokemon !== null) {
-      if (this.state.allPokemon.results !== undefined) {
-        return this.state.allPokemon.results[this.state.currentPokemonIndex]
-          .name;
-      }
-    }
-  };
+  // renderPokemonName = () => {
+  //   if (this.state.pokemon !== null) {
+  //     if (this.state.pokemon.results !== undefined) {
+  //       return this.state.pokemon.results.name;
+  //     }
+  //   }
+  // };
 
   getNextPokemon = () => {
-    if (
-      this.state.currentPokemonIndex !==
-      this.state.allPokemon.results.length - 1
-    )
-      this.setState((prevState) => {
-        return { currentPokemonIndex: prevState.currentPokemonIndex + 1 };
+    const nextPokemonId = this.state.pokemon.id + 1;
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${nextPokemonId}`)
+      .then((response) => {
+        this.setState({ pokemon: response.data });
       });
   };
 
   getPreviousPokemon = () => {
-    if (this.state.currentPokemonIndex !== 0) {
-      this.setState((prevState) => {
-        return { currentPokemonIndex: prevState.currentPokemonIndex - 1 };
-      });
+    const previousPokemonId = this.state.pokemon.id - 1;
+    if (this.state.pokemon.id > 1) {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${previousPokemonId}`)
+        .then((response) => {
+          this.setState({ pokemon: response.data });
+        });
+      console.log(this.state.pokemon.name);
     }
   };
 
   render() {
     const { pokemon } = this.state;
-    const { allPokemon } = this.state;
+    // console.log(pokemon ? pokemon.id + 3 : "no");
 
     return (
       <Pokedex>
         <LeftPage
-          bio={pokemon ? pokemon.species.url : ""}
-          renderPokemonName={this.renderPokemonName}
+          // bio={pokemon ? pokemon.species.url : ""}
+          name={pokemon ? pokemon.name : ""}
           getNextPokemon={this.getNextPokemon}
           getPreviousPokemon={this.getPreviousPokemon}
-          currentPokemonIndex={this.state.currentPokemonIndex}
-          currentPokemonUrl={
-            allPokemon
-              ? allPokemon.results[this.state.currentPokemonIndex].url
-              : ""
-          }
+          id={pokemon ? pokemon.id : ""}
+          sprites={pokemon ? pokemon.sprites : {}}
         />
         <Divider />
         <RightPage
           stats={pokemon ? pokemon.stats : []}
           type={pokemon ? pokemon.types : []}
           moves={pokemon ? pokemon.moves : ""}
-          currentPokemonUrl={
-            allPokemon
-              ? allPokemon.results[this.state.currentPokemonIndex].url
-              : ""
-          }
         />
       </Pokedex>
     );
@@ -100,3 +85,9 @@ class App extends React.Component {
 }
 
 export default App;
+
+// display a button that allows you to see the shiny version of a pokemon.
+// bio - relevant to the game version you choose.
+// evolution chain sprites.
+// change the moveset when the pokemon changes.
+// add an input so you can search by pokemon name or id number.

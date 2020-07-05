@@ -26,13 +26,15 @@ const LeftPage = (props) => {
       <LeftPageStyle>
         <Camera />
         <CurrentPokemon
-          allPokemon={props.allPokemon}
+          // currentPokemonData={props.currentPokemonData}
           bio={props.bio}
-          renderPokemonName={props.renderPokemonName}
-          currentPokemonIndex={props.currentPokemonIndex}
+          // renderPokemonName={props.renderPokemonName}
+          // currentPokemonIndex={props.currentPokemonIndex}
           getNextPokemon={props.getNextPokemon}
           getPreviousPokemon={props.getPreviousPokemon}
-          currentPokemonUrl={props.currentPokemonUrl}
+          id={props.id}
+          name={props.name}
+          sprites={props.sprites}
         />
 
         <LeftButtons />

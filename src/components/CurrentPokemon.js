@@ -3,16 +3,22 @@ import styled from "styled-components";
 import axios from "axios";
 
 const PokemonName = styled.div`
+  display: flex;
   justify-content: space-around;
   background-color: green;
-  display: flex;
 `;
 
-const PokemonPicture = styled.img`
+const NormalSpriteStyle = styled.img`
   height: 200px;
   width: auto;
-  // margin: 20px 0 0 150px; // I need this to be in the centre.
   margin: 0 auto;
+`;
+
+const ShinySpriteStyle = styled.img`
+  height: 200px;
+  width: auto;
+  margin: 0 auto;
+  // display: none;
 `;
 
 const CurrentPokemonStyle = styled.div`
@@ -34,46 +40,37 @@ const MyButtons = styled.div`
   justify-content: space-around;
 `;
 
+const ShinyButton = styled.button`
+  width: 100px;
+  height: 50px;
+  margin: 0 auto;
+`;
+
+const NormalButton = styled.button`
+  width: 100px;
+  height: 50px;
+  margin: 0 auto;
+  display: none;
+`;
+
 class CurrentPokemon extends React.Component {
-  // state = { bio: "", currentPokemonIndex: 0 };
-  state = { bio: "bio", currentPokemonId: "", currentPokemonSprite: "" };
-
-  // getBio = () => {
-  //   if (this.props.currentPokemonUrl !== "") {
-  //     axios.get(this.props.currentPokemonUrl).then((response) => {
-  //       this.setState({
-  //         bio: response.data.flavor_text_entries[0].flavor_text,
-  //       });
-  //     });
-  //   }
-  // };
-
-  getCurrentPokemonId = () => {
-    if (this.props.currentPokemonUrl !== "") {
-      axios.get(this.props.currentPokemonUrl).then((response) => {
-        console.log(response.data.sprites.front_default);
-        this.setState({
-          currentPokemonId: response.data.id,
-        });
-      });
-    }
-  };
-
-  getCurrentPokemonSprite = () => {
-    if (this.props.currentPokemonUrl !== "") {
-      axios.get(this.props.currentPokemonUrl).then((response) => {
-        this.setState({
-          currentPokemonSprite: response.data.sprites.front_default,
-        });
-      });
-    }
+  state = {
+    bio: "bio",
+    flag: 1,
+    spriteDisplay: "Shiny",
   };
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.currentPokemonUrl !== this.props.currentPokemonUrl) {
-      this.getCurrentPokemonSprite();
-      this.getCurrentPokemonId();
-      // this.getBio();
+    // if (prevProps.currentPokemonUrl !== this.props.currentPokemonUrl) {
+    //   this.getCurrentPokemonId();
+    // }
+  };
+
+  toggleShiny = () => {
+    if (this.state.flag === 1) {
+      this.setState({ flag: 0, spriteDisplay: "Normal" });
+    } else {
+      this.setState({ flag: 1, spriteDisplay: "Shiny" });
     }
   };
 
@@ -81,19 +78,31 @@ class CurrentPokemon extends React.Component {
     return (
       <CurrentPokemonStyle>
         <PokemonName>
-          <p>
-            {this.props.renderPokemonName()} No. {this.state.currentPokemonId}
-          </p>
+          <p>{this.props.name}</p>
+          <p>No. {this.props.id}</p>
         </PokemonName>
-        <PokemonPicture
+        <NormalSpriteStyle
+          // src={this.props.sprites.front_default}
           src={
-            this.state.currentPokemonSprite
-              ? this.state.currentPokemonSprite
-              : ""
+            this.state.flag
+              ? this.props.sprites.front_default
+              : this.props.sprites.front_shiny
           }
           alt={this.props.name}
         />
+
+        {/* <ShinySpriteStyle
+          src={
+            this.state.currentShinySprite ? this.state.currentShinySprite : ""
+          }
+          alt={this.props.name}
+        /> */}
         <PokemonInformation>{this.state.bio}</PokemonInformation>
+
+        <ShinyButton onClick={this.toggleShiny}>
+          {this.state.spriteDisplay} Version
+        </ShinyButton>
+
         <MyButtons>
           <button onClick={this.props.getPreviousPokemon}>←</button>
           <button onClick={this.props.getNextPokemon}>→</button>
@@ -104,3 +113,13 @@ class CurrentPokemon extends React.Component {
 }
 
 export default CurrentPokemon;
+
+// getBio = () => {
+//   if (this.props.currentPokemonUrl !== "") {
+//     axios.get(this.props.currentPokemonUrl).then((response) => {
+//       this.setState({
+//         bio: response.data.flavor_text_entries[0].flavor_text,
+//       });
+//     });
+//   }
+// };

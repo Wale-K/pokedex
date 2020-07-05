@@ -27,40 +27,40 @@ const MyButtons = styled.div`
 class Moves extends React.Component {
   state = { movesIndex: 0 };
 
-  renderMove = () => {
-    if (this.props.moves[this.state.movesIndex] !== undefined) {
-      return this.props.moves[this.state.movesIndex].move.name;
-    }
-  };
+  //   renderMove = () => {
+  //     if (this.props.moves[this.state.movesIndex] !== undefined) {
+  //       return this.props.moves[this.state.movesIndex].move.name;
+  //     }
+  //   };
 
-  getNextPokemonMove = () => {
-    if (this.state.movesIndex !== this.props.moves.length - 1) {
-      this.setState((prevState) => {
-        return { movesIndex: prevState.movesIndex + 1 };
-      });
-    }
-  };
+  //   getNextPokemonMove = () => {
+  //     if (this.state.movesIndex !== this.props.moves.length - 1) {
+  //       this.setState((prevState) => {
+  //         return { movesIndex: prevState.movesIndex + 1 };
+  //       });
+  //     }
+  //   };
 
-  getPreviousPokemonMove = () => {
-    if (this.state.movesIndex !== 0) {
-      this.setState((prevState) => {
-        return { movesIndex: prevState.movesIndex - 1 };
-      });
-    }
-  };
+  //   getPreviousPokemonMove = () => {
+  //     if (this.state.movesIndex !== 0) {
+  //       this.setState((prevState) => {
+  //         return { movesIndex: prevState.movesIndex - 1 };
+  //       });
+  //     }
+  //   };
 
   render() {
     return (
       <div>
         <MovesStyle>
-          {this.renderMove()}
+          {/* {this.renderMove()} */}
           <p>Learned at Level:&nbsp;</p>
-          <p>
+          {/* <p>
             {this.props.moves[this.state.movesIndex]
               ? this.props.moves[this.state.movesIndex].version_group_details[0]
                   .level_learned_at
               : ""}
-          </p>
+          </p> */}
 
           {/* <MovesStyle>
           <PageDivider>
@@ -82,8 +82,8 @@ class Moves extends React.Component {
             <p>Learn: Lv 0</p>
           </PageDivider> */}
           <MyButtons>
-            <button onClick={this.getNextPokemonMove}>↑</button>
-            <button onClick={this.getPreviousPokemonMove}>↓</button>
+            <button>↑</button>
+            <button>↓</button>
           </MyButtons>
         </MovesStyle>
       </div>

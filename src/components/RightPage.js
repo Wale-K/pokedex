@@ -47,7 +47,7 @@ class RightPage extends React.Component {
   state = { pokemonIndex: 0, stats: [], type: [] };
 
   getBaseStat = () => {
-    if (this.props.currentPokemonUrl !== "") {
+    if (this.props.pokemon !== "") {
       axios.get(this.props.currentPokemonUrl).then((response) => {
         this.setState({
           stats: response.data.stats,
@@ -66,19 +66,14 @@ class RightPage extends React.Component {
     }
   };
 
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.currentPokemonUrl !== this.props.currentPokemonUrl) {
-      this.getBaseStat();
-      this.getType();
-    }
-  };
+  componentDidUpdate = (prevProps) => {};
 
   render() {
     return (
       <RightPageStyle>
         <BasicInfo>
           <BaseInformation>
-            {this.state.stats.map((baseStat) => {
+            {this.props.stats.map((baseStat) => {
               return (
                 <div key={baseStat.stat.name}>
                   <p>{baseStat.stat.name}</p>
@@ -89,7 +84,7 @@ class RightPage extends React.Component {
           </BaseInformation>
           <Types>
             <p>Type</p>
-            {this.state.type.map((type) => {
+            {this.props.type.map((type) => {
               return <p key={type.type.name}>{type.type.name}</p>;
             })}
           </Types>
