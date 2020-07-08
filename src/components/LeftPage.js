@@ -35,6 +35,9 @@ const LeftPage = (props) => {
           id={props.id}
           name={props.name}
           sprites={props.sprites}
+          toggleShiny={props.toggleShiny}
+          spriteDisplay={props.spriteDisplay}
+          flag={props.flag}
         />
 
         <LeftButtons />

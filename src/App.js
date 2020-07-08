@@ -22,28 +22,33 @@ const Divider = styled.div`
 `;
 
 class App extends React.Component {
-  state = { pokemon: null, index: 6 };
+  state = {
+    pokemon: null,
+    // index: 122,
+    flag: true,
+    spriteDisplay: "Shiny",
+    species: "",
+  };
 
   componentDidMount = () => {
     axios.get(`https://pokeapi.co/api/v2/pokemon/6`).then((response) => {
       this.setState({ pokemon: response.data });
+      axios.get(response.data.species.url).then((secondResponse) => {
+        this.setState({ species: secondResponse.data });
+      });
     });
   };
-
-  // renderPokemonName = () => {
-  //   if (this.state.pokemon !== null) {
-  //     if (this.state.pokemon.results !== undefined) {
-  //       return this.state.pokemon.results.name;
-  //     }
-  //   }
-  // };
 
   getNextPokemon = () => {
     const nextPokemonId = this.state.pokemon.id + 1;
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${nextPokemonId}`)
       .then((response) => {
-        this.setState({ pokemon: response.data });
+        this.setState({
+          pokemon: response.data,
+          flag: true,
+          spriteDisplay: "Shiny",
+        });
       });
   };
 
@@ -53,31 +58,44 @@ class App extends React.Component {
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${previousPokemonId}`)
         .then((response) => {
-          this.setState({ pokemon: response.data });
+          this.setState({
+            pokemon: response.data,
+            flag: true,
+            spriteDisplay: "Shiny",
+          });
         });
-      console.log(this.state.pokemon.name);
+    }
+  };
+
+  toggleShiny = () => {
+    if (this.state.flag === true) {
+      this.setState({ flag: false, spriteDisplay: "Normal" });
+    } else {
+      this.setState({ flag: true, spriteDisplay: "Shiny" });
     }
   };
 
   render() {
-    const { pokemon } = this.state;
-    // console.log(pokemon ? pokemon.id + 3 : "no");
+    const { pokemon, species } = this.state;
 
     return (
       <Pokedex>
         <LeftPage
-          // bio={pokemon ? pokemon.species.url : ""}
           name={pokemon ? pokemon.name : ""}
           getNextPokemon={this.getNextPokemon}
           getPreviousPokemon={this.getPreviousPokemon}
           id={pokemon ? pokemon.id : ""}
           sprites={pokemon ? pokemon.sprites : {}}
+          toggleShiny={this.toggleShiny}
+          spriteDisplay={this.state.spriteDisplay}
+          flag={this.state.flag}
         />
         <Divider />
         <RightPage
           stats={pokemon ? pokemon.stats : []}
           type={pokemon ? pokemon.types : []}
           moves={pokemon ? pokemon.moves : ""}
+          evolutionUrl={species ? species.evolution_chain.url : ""}
         />
       </Pokedex>
     );
@@ -86,7 +104,6 @@ class App extends React.Component {
 
 export default App;
 
-// display a button that allows you to see the shiny version of a pokemon.
 // bio - relevant to the game version you choose.
 // evolution chain sprites.
 // change the moveset when the pokemon changes.

@@ -27,6 +27,7 @@ const BaseInformation = styled.div`
     display: flex;
     justify-content: space-between;
   }
+  text-transform: capitalize;
 `;
 
 const Types = styled.div`
@@ -35,7 +36,7 @@ const Types = styled.div`
   flex-direction: column;
   width: 50%;
   text-align: center;
-
+  text-transform: capitalize;
   border-radius: 0 10px 0 0;
 `;
 
@@ -74,12 +75,20 @@ class RightPage extends React.Component {
         <BasicInfo>
           <BaseInformation>
             {this.props.stats.map((baseStat) => {
-              return (
-                <div key={baseStat.stat.name}>
-                  <p>{baseStat.stat.name}</p>
-                  <p>{baseStat.base_stat}</p>
-                </div>
-              );
+              if (baseStat.stat.name.length < 3) {
+                return (
+                  <div key={baseStat.stat.name}>
+                    <p>{baseStat.stat.name.toUpperCase()}</p>
+                    <p>{baseStat.base_stat}</p>
+                  </div>
+                );
+              } else
+                return (
+                  <div key={baseStat.stat.name}>
+                    <p>{baseStat.stat.name.split("-").join(" ")}</p>
+                    <p>{baseStat.base_stat}</p>
+                  </div>
+                );
             })}
           </BaseInformation>
           <Types>
@@ -89,8 +98,12 @@ class RightPage extends React.Component {
             })}
           </Types>
         </BasicInfo>
-        <EvolutionChain />
+        <EvolutionChain evolutionUrl={this.props.evolutionUrl} />
         <Moves moves={this.props.moves} />
+        <div>
+          <input />
+          <button type="submit">Search</button>
+        </div>
       </RightPageStyle>
     );
   }

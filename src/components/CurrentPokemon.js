@@ -6,6 +6,7 @@ const PokemonName = styled.div`
   display: flex;
   justify-content: space-around;
   background-color: green;
+  text-transform: capitalize;
 `;
 
 const NormalSpriteStyle = styled.img`
@@ -56,8 +57,6 @@ const NormalButton = styled.button`
 class CurrentPokemon extends React.Component {
   state = {
     bio: "bio",
-    flag: 1,
-    spriteDisplay: "Shiny",
   };
 
   componentDidUpdate = (prevProps) => {
@@ -66,41 +65,26 @@ class CurrentPokemon extends React.Component {
     // }
   };
 
-  toggleShiny = () => {
-    if (this.state.flag === 1) {
-      this.setState({ flag: 0, spriteDisplay: "Normal" });
-    } else {
-      this.setState({ flag: 1, spriteDisplay: "Shiny" });
-    }
-  };
-
   render() {
     return (
       <CurrentPokemonStyle>
         <PokemonName>
-          <p>{this.props.name}</p>
+          <p>{this.props.name.split("-").join(". ")}</p>
           <p>No. {this.props.id}</p>
         </PokemonName>
         <NormalSpriteStyle
-          // src={this.props.sprites.front_default}
           src={
-            this.state.flag
+            this.props.flag
               ? this.props.sprites.front_default
               : this.props.sprites.front_shiny
           }
           alt={this.props.name}
         />
 
-        {/* <ShinySpriteStyle
-          src={
-            this.state.currentShinySprite ? this.state.currentShinySprite : ""
-          }
-          alt={this.props.name}
-        /> */}
         <PokemonInformation>{this.state.bio}</PokemonInformation>
 
-        <ShinyButton onClick={this.toggleShiny}>
-          {this.state.spriteDisplay} Version
+        <ShinyButton onClick={this.props.toggleShiny}>
+          {this.props.spriteDisplay} Version
         </ShinyButton>
 
         <MyButtons>
