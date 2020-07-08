@@ -28,6 +28,8 @@ class App extends React.Component {
     flag: true,
     spriteDisplay: "Shiny",
     species: "",
+    searchInputValue: "",
+    allPokemon: null,
   };
 
   componentDidMount = () => {
@@ -37,6 +39,11 @@ class App extends React.Component {
         this.setState({ species: secondResponse.data });
       });
     });
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200000`)
+      .then((response) => {
+        this.setState({ allPokemon: response.data });
+      });
   };
 
   getNextPokemon = () => {
@@ -75,6 +82,29 @@ class App extends React.Component {
     }
   };
 
+  handlePokemonSearch = (event) => {
+    this.setState({
+      searchInputValue: event.target.value,
+    });
+  };
+
+  handlePokemonSearchSubmit = () => {
+    if (this.state.searchInputValue !== "") {
+      axios
+        .get(
+          `https://pokeapi.co/api/v2/pokemon/${this.state.searchInputValue.toLowerCase()}`
+        )
+        .then((response) => {
+          this.setState({
+            pokemon: response.data,
+            flag: true,
+            spriteDisplay: "Shiny",
+            searchInputValue: "",
+          });
+        });
+    }
+  };
+
   render() {
     const { pokemon, species } = this.state;
 
@@ -91,11 +121,15 @@ class App extends React.Component {
           flag={this.state.flag}
         />
         <Divider />
+
         <RightPage
           stats={pokemon ? pokemon.stats : []}
           type={pokemon ? pokemon.types : []}
           moves={pokemon ? pokemon.moves : ""}
           evolutionUrl={species ? species.evolution_chain.url : ""}
+          searchInputValue={this.state.searchInputValue}
+          handlePokemonSearch={this.handlePokemonSearch}
+          handlePokemonSearchSubmit={this.handlePokemonSearchSubmit}
         />
       </Pokedex>
     );
@@ -108,3 +142,34 @@ export default App;
 // evolution chain sprites.
 // change the moveset when the pokemon changes.
 // add an input so you can search by pokemon name or id number.
+
+// class ControlledInput extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       input: ''
+//     };
+//     // change code below this line
+// this.handleChange = this.handleChange.bind(this)
+//     // change code above this line
+//   }
+//   // change code below this line
+// handleChange(event) {
+//     this.setState({
+//       input: event.target.value
+//     });
+// }
+//   // change code above this line
+//   render() {
+//     return (
+//       <div>
+//         { /* change code below this line */}
+// <input value = {this.state.input} onChange = {this.handleChange.bind(this)}/>
+
+//         { /* change code above this line */}
+//         <h4>Controlled Input:</h4>
+//         <p>{this.state.input}</p>
+//       </div>
+//     );
+//   }
+// };

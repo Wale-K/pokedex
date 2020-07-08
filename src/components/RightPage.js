@@ -67,6 +67,10 @@ class RightPage extends React.Component {
     }
   };
 
+  test = () => {
+    console.log(this.props.searchInputValue);
+  };
+
   componentDidUpdate = (prevProps) => {};
 
   render() {
@@ -101,8 +105,14 @@ class RightPage extends React.Component {
         <EvolutionChain evolutionUrl={this.props.evolutionUrl} />
         <Moves moves={this.props.moves} />
         <div>
-          <input />
-          <button type="submit">Search</button>
+          <input
+            value={this.props.searchInputValue}
+            onChange={this.props.handlePokemonSearch}
+          />
+          <button type="submit" onClick={this.props.handlePokemonSearchSubmit}>
+            Search
+          </button>
+          <p>{this.props.searchInputValue}</p>
         </div>
       </RightPageStyle>
     );

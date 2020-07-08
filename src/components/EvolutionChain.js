@@ -76,7 +76,6 @@ class EvolutionChain extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <EvolutionChainStyle>
         {this.renderPokemonName()}
