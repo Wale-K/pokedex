@@ -44,11 +44,6 @@ const BasicInfo = styled.div`
   display: flex;
 `;
 
-const MyButtons = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-
 const SearchStyle = styled.div`
   width: 400px;
   // background-color: orange;
@@ -129,10 +124,6 @@ class RightPage extends React.Component {
           </button>
           <p>{this.props.searchInputValue}</p>
         </SearchStyle>
-        <MyButtons>
-          <button onClick={this.props.getPreviousPokemon}>←</button>
-          <button onClick={this.props.getNextPokemon}>→</button>
-        </MyButtons>
       </RightPageStyle>
     );
   }

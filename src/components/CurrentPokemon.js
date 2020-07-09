@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 
-const PokemonName = styled.div`
+const PokemonNameAndId = styled.div`
   display: flex;
   justify-content: space-around;
   background-color: green;
   text-transform: capitalize;
+`;
+
+const PokemonName = styled.p`
+  width: 200px;
 `;
 
 const NormalSpriteStyle = styled.img`
@@ -48,6 +51,17 @@ const NormalButton = styled.button`
   display: none;
 `;
 
+const MyButtons = styled.div`
+  display: flex;
+  // justify-content: space-around;
+  margin-right: 20px;
+  margin-left: auto;
+  p {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+`;
+
 class CurrentPokemon extends React.Component {
   state = {
     bio: "bio",
@@ -62,10 +76,14 @@ class CurrentPokemon extends React.Component {
   render() {
     return (
       <CurrentPokemonStyle>
-        <PokemonName>
-          <p>{this.props.name.split("-").join(". ")}</p>
-          <p>No. {this.props.id}</p>
-        </PokemonName>
+        <PokemonNameAndId>
+          <PokemonName>{this.props.name.split("-").join(". ")}</PokemonName>
+          <MyButtons>
+            <button onClick={this.props.getPreviousPokemon}>←</button>
+            <p>No. {this.props.id}</p>
+            <button onClick={this.props.getNextPokemon}>→</button>
+          </MyButtons>
+        </PokemonNameAndId>
         <NormalSpriteStyle
           src={
             this.props.flag

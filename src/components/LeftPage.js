@@ -37,6 +37,8 @@ const LeftPage = (props) => {
           toggleShiny={props.toggleShiny}
           spriteDisplay={props.spriteDisplay}
           flag={props.flag}
+          getNextPokemon={props.getNextPokemon}
+          getPreviousPokemon={props.getPreviousPokemon}
         />
 
         <LeftButtons />

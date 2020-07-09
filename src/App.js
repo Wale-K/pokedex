@@ -121,6 +121,8 @@ class App extends React.Component {
           toggleShiny={this.toggleShiny}
           spriteDisplay={this.state.spriteDisplay}
           flag={this.state.flag}
+          getNextPokemon={this.getNextPokemon}
+          getPreviousPokemon={this.getPreviousPokemon}
         />
         <Divider />
 
@@ -132,8 +134,6 @@ class App extends React.Component {
           searchInputValue={this.state.searchInputValue}
           handlePokemonSearch={this.handlePokemonSearch}
           handlePokemonSearchSubmit={this.handlePokemonSearchSubmit}
-          getNextPokemon={this.getNextPokemon}
-          getPreviousPokemon={this.getPreviousPokemon}
         />
       </Pokedex>
     );
@@ -141,6 +141,12 @@ class App extends React.Component {
 }
 
 export default App;
+
+// Next session goals:
+// The arrow buttons around the pokemon number shouldn't change based on the length of the pokemon's name.
+// Instead of just displaying the pokemon name, you should be able to click on it and search for the name.
+
+// App goals:
 
 // bio - relevant to the game version you choose.
 // evolution chain sprites.
