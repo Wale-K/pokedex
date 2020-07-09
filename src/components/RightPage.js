@@ -44,6 +44,21 @@ const BasicInfo = styled.div`
   display: flex;
 `;
 
+const MyButtons = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const SearchStyle = styled.div`
+  width: 400px;
+  // background-color: orange;
+  display: flex;
+  input {
+    width: 290px;
+  }
+  justify-content: space-between;
+`;
+
 class RightPage extends React.Component {
   state = { pokemonIndex: 0, stats: [], type: [] };
 
@@ -71,7 +86,7 @@ class RightPage extends React.Component {
     console.log(this.props.searchInputValue);
   };
 
-  componentDidUpdate = (prevProps) => {};
+  // componentDidUpdate = (prevProps) => {};
 
   render() {
     return (
@@ -104,7 +119,7 @@ class RightPage extends React.Component {
         </BasicInfo>
         <EvolutionChain evolutionUrl={this.props.evolutionUrl} />
         <Moves moves={this.props.moves} />
-        <div>
+        <SearchStyle>
           <input
             value={this.props.searchInputValue}
             onChange={this.props.handlePokemonSearch}
@@ -113,7 +128,11 @@ class RightPage extends React.Component {
             Search
           </button>
           <p>{this.props.searchInputValue}</p>
-        </div>
+        </SearchStyle>
+        <MyButtons>
+          <button onClick={this.props.getPreviousPokemon}>←</button>
+          <button onClick={this.props.getNextPokemon}>→</button>
+        </MyButtons>
       </RightPageStyle>
     );
   }

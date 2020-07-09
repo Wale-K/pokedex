@@ -35,12 +35,6 @@ const PokemonInformation = styled.div`
   text-align: center;
 `;
 
-const MyButtons = styled.div`
-  display: flex;
-
-  justify-content: space-around;
-`;
-
 const ShinyButton = styled.button`
   width: 100px;
   height: 50px;
@@ -86,11 +80,6 @@ class CurrentPokemon extends React.Component {
         <ShinyButton onClick={this.props.toggleShiny}>
           {this.props.spriteDisplay} Version
         </ShinyButton>
-
-        <MyButtons>
-          <button onClick={this.props.getPreviousPokemon}>←</button>
-          <button onClick={this.props.getNextPokemon}>→</button>
-        </MyButtons>
       </CurrentPokemonStyle>
     );
   }

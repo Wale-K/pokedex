@@ -30,6 +30,7 @@ class App extends React.Component {
     species: "",
     searchInputValue: "",
     allPokemon: null,
+    errorMessage: "",
   };
 
   componentDidMount = () => {
@@ -97,9 +98,12 @@ class App extends React.Component {
         .then((response) => {
           this.setState({
             pokemon: response.data,
-            flag: true,
-            spriteDisplay: "Shiny",
             searchInputValue: "",
+          });
+        })
+        .catch((error) => {
+          this.setState({
+            errorMessage: "This is not a valid pokemon name or ID.",
           });
         });
     }
@@ -112,8 +116,6 @@ class App extends React.Component {
       <Pokedex>
         <LeftPage
           name={pokemon ? pokemon.name : ""}
-          getNextPokemon={this.getNextPokemon}
-          getPreviousPokemon={this.getPreviousPokemon}
           id={pokemon ? pokemon.id : ""}
           sprites={pokemon ? pokemon.sprites : {}}
           toggleShiny={this.toggleShiny}
@@ -130,6 +132,8 @@ class App extends React.Component {
           searchInputValue={this.state.searchInputValue}
           handlePokemonSearch={this.handlePokemonSearch}
           handlePokemonSearchSubmit={this.handlePokemonSearchSubmit}
+          getNextPokemon={this.getNextPokemon}
+          getPreviousPokemon={this.getPreviousPokemon}
         />
       </Pokedex>
     );
@@ -141,35 +145,4 @@ export default App;
 // bio - relevant to the game version you choose.
 // evolution chain sprites.
 // change the moveset when the pokemon changes.
-// add an input so you can search by pokemon name or id number.
-
-// class ControlledInput extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       input: ''
-//     };
-//     // change code below this line
-// this.handleChange = this.handleChange.bind(this)
-//     // change code above this line
-//   }
-//   // change code below this line
-// handleChange(event) {
-//     this.setState({
-//       input: event.target.value
-//     });
-// }
-//   // change code above this line
-//   render() {
-//     return (
-//       <div>
-//         { /* change code below this line */}
-// <input value = {this.state.input} onChange = {this.handleChange.bind(this)}/>
-
-//         { /* change code above this line */}
-//         <h4>Controlled Input:</h4>
-//         <p>{this.state.input}</p>
-//       </div>
-//     );
-//   }
-// };
+// add an input so you can search by pokemon name or id number --> Fix the errors.

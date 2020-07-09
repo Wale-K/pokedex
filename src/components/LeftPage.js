@@ -30,8 +30,7 @@ const LeftPage = (props) => {
           bio={props.bio}
           // renderPokemonName={props.renderPokemonName}
           // currentPokemonIndex={props.currentPokemonIndex}
-          getNextPokemon={props.getNextPokemon}
-          getPreviousPokemon={props.getPreviousPokemon}
+
           id={props.id}
           name={props.name}
           sprites={props.sprites}
