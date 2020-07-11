@@ -10,6 +10,7 @@ const PokemonNameAndId = styled.div`
 
 const PokemonName = styled.p`
   width: 200px;
+  margin-left: 20px;
 `;
 
 const NormalSpriteStyle = styled.img`
@@ -57,8 +58,8 @@ const MyButtons = styled.div`
   margin-right: 20px;
   margin-left: auto;
   p {
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 70px;
+    text-align: center;
   }
 `;
 

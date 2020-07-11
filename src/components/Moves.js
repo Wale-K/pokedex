@@ -6,16 +6,12 @@ const MovesStyle = styled.div`
   display: flex;
 `;
 
-const PageDivider = styled.div`
-  background-color: yellow;
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-  div {
-    display: flex;
-    justify-content: space-between;
-  }
-  text-align: right;
+const MoveName = styled.p`
+  width: 200px;
+`;
+
+const MoveLevel = styled.p`
+  width: 150px;
 `;
 
 const MyButtons = styled.div`
@@ -27,63 +23,44 @@ const MyButtons = styled.div`
 class Moves extends React.Component {
   state = { movesIndex: 0 };
 
-  //   renderMove = () => {
-  //     if (this.props.moves[this.state.movesIndex] !== undefined) {
-  //       return this.props.moves[this.state.movesIndex].move.name;
-  //     }
-  //   };
+  // renderMove = () => {
+  //   if (this.props.moves[this.state.movesIndex] !== undefined) {
+  //     return this.props.moves[this.state.movesIndex].move.name;
+  //   }
+  // };
 
-  //   getNextPokemonMove = () => {
-  //     if (this.state.movesIndex !== this.props.moves.length - 1) {
-  //       this.setState((prevState) => {
-  //         return { movesIndex: prevState.movesIndex + 1 };
-  //       });
-  //     }
-  //   };
+  // getNextPokemonMove = () => {
+  //   if (this.state.movesIndex !== this.props.moves.length - 1) {
+  //     this.setState((prevState) => {
+  //       return { movesIndex: prevState.movesIndex + 1 };
+  //     });
+  //   }
+  // };
 
-  //   getPreviousPokemonMove = () => {
-  //     if (this.state.movesIndex !== 0) {
-  //       this.setState((prevState) => {
-  //         return { movesIndex: prevState.movesIndex - 1 };
-  //       });
-  //     }
-  //   };
+  // getPreviousPokemonMove = () => {
+  //   if (this.state.movesIndex !== 0) {
+  //     this.setState((prevState) => {
+  //       return { movesIndex: prevState.movesIndex - 1 };
+  //     });
+  //   }
+  // };
 
   render() {
     return (
       <div>
         <MovesStyle>
-          {/* {this.renderMove()} */}
-          <p>Learned at Level:&nbsp;</p>
-          {/* <p>
-            {this.props.moves[this.state.movesIndex]
+          <MoveName> {this.props.renderMove()}</MoveName>
+          <MoveLevel>
+            Learned at Level:{" "}
+            {this.props.moves[this.props.movesIndex]
               ? this.props.moves[this.state.movesIndex].version_group_details[0]
                   .level_learned_at
               : ""}
-          </p> */}
+          </MoveLevel>
 
-          {/* <MovesStyle>
-          <PageDivider>
-            <div>
-              
-              <p>100</p>
-            </div>
-            <div>
-              <p>Power</p>
-              <p>80</p>
-            </div>
-            <div>
-              <p>PP</p>
-              <p>10</p>
-            </div>
-          </PageDivider>
-          <PageDivider>
-            <p>Type: Grass</p>
-            <p>Learn: Lv 0</p>
-          </PageDivider> */}
           <MyButtons>
-            <button>↑</button>
-            <button>↓</button>
+            <button onClick={this.props.getPreviousPokemonMove}>↑</button>
+            <button onClick={this.props.getNextPokemonMove}>↓</button>
           </MyButtons>
         </MovesStyle>
       </div>

@@ -24,7 +24,7 @@ const LeftPage = (props) => {
   return (
     <>
       <LeftPageStyle>
-        <Camera />
+        <Camera setGameVersion={props.setGameVersion} />
         <CurrentPokemon
           // currentPokemonData={props.currentPokemonData}
           bio={props.bio}

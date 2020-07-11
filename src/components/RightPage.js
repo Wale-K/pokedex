@@ -113,16 +113,23 @@ class RightPage extends React.Component {
           </Types>
         </BasicInfo>
         <EvolutionChain evolutionUrl={this.props.evolutionUrl} />
-        <Moves moves={this.props.moves} />
+        <Moves
+          renderMove={this.props.renderMove}
+          getNextPokemonMove={this.props.getNextPokemonMove}
+          getPreviousPokemonMove={this.props.getPreviousPokemonMove}
+          movesIndex={this.props.movesIndex}
+          moves={this.props.moves}
+        />
         <SearchStyle>
           <input
             value={this.props.searchInputValue}
             onChange={this.props.handlePokemonSearch}
+            placeholder={this.props.searchInputValue}
           />
           <button type="submit" onClick={this.props.handlePokemonSearchSubmit}>
             Search
           </button>
-          <p>{this.props.searchInputValue}</p>
+          <p>{this.props.errorMessage}</p>
         </SearchStyle>
       </RightPageStyle>
     );

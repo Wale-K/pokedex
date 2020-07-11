@@ -31,6 +31,8 @@ class App extends React.Component {
     searchInputValue: "",
     allPokemon: null,
     errorMessage: "",
+    movesIndex: 0,
+    gameVersion: "",
   };
 
   componentDidMount = () => {
@@ -47,6 +49,10 @@ class App extends React.Component {
       });
   };
 
+  setGameVersion = (color) => {
+    this.setState({ gameVersion: color });
+  };
+
   getNextPokemon = () => {
     const nextPokemonId = this.state.pokemon.id + 1;
     axios
@@ -56,6 +62,7 @@ class App extends React.Component {
           pokemon: response.data,
           flag: true,
           spriteDisplay: "Shiny",
+          movesIndex: 0,
         });
       });
   };
@@ -70,6 +77,7 @@ class App extends React.Component {
             pokemon: response.data,
             flag: true,
             spriteDisplay: "Shiny",
+            movesIndex: 0,
           });
         });
     }
@@ -99,6 +107,7 @@ class App extends React.Component {
           this.setState({
             pokemon: response.data,
             searchInputValue: "",
+            errorMessage: "",
           });
         })
         .catch((error) => {
@@ -106,6 +115,36 @@ class App extends React.Component {
             errorMessage: "This is not a valid pokemon name or ID.",
           });
         });
+    }
+  };
+
+  renderMove = () => {
+    if (this.state.pokemon) {
+      return this.state.pokemon.moves[this.state.movesIndex].move.name;
+    }
+  };
+
+  getPreviousPokemonMove = () => {
+    if (this.state.pokemon) {
+      if (this.state.movesIndex !== this.state.pokemon.moves.length - 1) {
+        this.setState((prevState) => {
+          return { movesIndex: prevState.movesIndex + 1 };
+        });
+      }
+    }
+  };
+
+  getNextPokemonMove = () => {
+    if (this.state.movesIndex !== 0) {
+      this.setState((prevState) => {
+        return { movesIndex: prevState.movesIndex - 1 };
+      });
+    }
+  };
+
+  getPokemonMoveLevel = () => {
+    if (this.state.pokemon) {
+      return this.state.pokemon.moves;
     }
   };
 
@@ -123,17 +162,23 @@ class App extends React.Component {
           flag={this.state.flag}
           getNextPokemon={this.getNextPokemon}
           getPreviousPokemon={this.getPreviousPokemon}
+          setGameVersion={this.setGameVersion}
         />
         <Divider />
 
         <RightPage
           stats={pokemon ? pokemon.stats : []}
           type={pokemon ? pokemon.types : []}
-          moves={pokemon ? pokemon.moves : ""}
+          moves={pokemon ? pokemon.moves : []}
           evolutionUrl={species ? species.evolution_chain.url : ""}
           searchInputValue={this.state.searchInputValue}
           handlePokemonSearch={this.handlePokemonSearch}
           handlePokemonSearchSubmit={this.handlePokemonSearchSubmit}
+          errorMessage={this.state.errorMessage}
+          movesIndex={this.state.movesIndex}
+          renderMove={this.renderMove}
+          getNextPokemonMove={this.getNextPokemonMove}
+          getPreviousPokemonMove={this.getPreviousPokemonMove}
         />
       </Pokedex>
     );
