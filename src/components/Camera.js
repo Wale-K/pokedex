@@ -1,56 +1,46 @@
 import React from "react";
 import styled from "styled-components";
 
-const Blue = styled.div`
-  background-color: #27abfd;
-  width: 65px;
-  height: 65px;
-  border-radius: 50px;
-  margin-right: 10px;
-`;
-
-const Red = styled.div`
-  background-color: #cc0a2c;
-  width: 20px;
-  height: 20px;
-  border-radius: 50px;
-  margin-right: 10px;
-`;
-
-const Yellow = styled.div`
-  background-color: yellow;
-  width: 20px;
-  height: 20px;
-  border-radius: 50px;
-  margin-right: 10px;
-`;
-
-const Green = styled.div`
-  background-color: green;
-  width: 20px;
-  height: 20px;
-  border-radius: 50px;
-`;
-
 const CameraStyle = styled.div`
   // background-color: pink;
   display: flex;
-  flex-direction: row;
+
   width: 400px;
   height: 65px;
   border-radius: 10px 0 0 0;
   margin-bottom: 5px;
+  margin-top: 5px;
+  button {
+    width: 54px;
+  }
+  justify-content: space-around;
 `;
+
+const gameIndices = [
+  { render: "R/B/Y", argument: "red", generation: 1 },
+  { render: "G/S/C", argument: "gold", generation: 2 },
+  { render: "R/S/E", argument: "ruby", generation: 3 },
+  { render: "D/P/PT", argument: "diamond", generation: 4 },
+  { render: "B/W", argument: "black", generation: 5 },
+  { render: "X/Y", argument: "omega-ruby-alpha-sapphire", generation: 6 },
+  { render: "S/M", argument: "sun-moon", generation: 7 },
+];
+
+// gameIndices needs to be changes because gen 5+ pokemon don't have data in a game_indices array on the API.
 
 const Camera = (props) => {
   return (
     <CameraStyle>
-      <Blue />
-      <Red />
-      <Yellow />
-      <Green />
-      <button onClick={props.setGameVersion}>Red/Blue</button>
-      <button onClick={props.setGameVersion}>Yellow</button>
+      {gameIndices.map((elem) => {
+        return (
+          <button
+            key={elem.argument}
+            onClick={() => props.setGameVersion(elem.argument)}
+          >
+            {elem.render}
+          </button>
+        );
+      })}
     </CameraStyle>
   );
 };

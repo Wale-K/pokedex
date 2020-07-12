@@ -78,7 +78,7 @@ class CurrentPokemon extends React.Component {
     return (
       <CurrentPokemonStyle>
         <PokemonNameAndId>
-          <PokemonName>{this.props.name.split("-").join(". ")}</PokemonName>
+          <PokemonName>{this.props.name.split("-").join(" ")}</PokemonName>
           <MyButtons>
             <button onClick={this.props.getPreviousPokemon}>←</button>
             <p>No. {this.props.id}</p>

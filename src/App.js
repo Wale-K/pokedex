@@ -32,7 +32,8 @@ class App extends React.Component {
     allPokemon: null,
     errorMessage: "",
     movesIndex: 0,
-    gameVersion: "",
+    gameVersion: "rby",
+    iscorrectVersion: true,
   };
 
   componentDidMount = () => {
@@ -49,20 +50,42 @@ class App extends React.Component {
       });
   };
 
-  setGameVersion = (color) => {
-    this.setState({ gameVersion: color });
+  setGameVersion = (colour) => {
+    this.setState({ gameVersion: colour }, () =>
+      console.log(this.state.gameVersion)
+    );
   };
 
-  getNextPokemon = () => {
-    const nextPokemonId = this.state.pokemon.id + 1;
+  resetPokemon = (arg) => {
     axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${nextPokemonId}`)
-      .then((response) => {
+      .get(
+        `https://pokeapi.co/api/v2/pokemon/${this.state.gameVersionPokemon.red}`
+      )
+      .then((response) =>
         this.setState({
           pokemon: response.data,
           flag: true,
           spriteDisplay: "Shiny",
           movesIndex: 0,
+        })
+      );
+  };
+
+  getNextPokemon = () => {
+    const nextPokemonId = this.state.pokemon.id + 1;
+
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${nextPokemonId}`)
+      .then((response) => {
+        response.data.game_indices.map((elem) => {
+          if (elem.version.name === this.state.gameVersion) {
+            this.setState({
+              pokemon: response.data,
+              flag: true,
+              spriteDisplay: "Shiny",
+              movesIndex: 0,
+            });
+          }
         });
       });
   };
@@ -73,11 +96,15 @@ class App extends React.Component {
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${previousPokemonId}`)
         .then((response) => {
-          this.setState({
-            pokemon: response.data,
-            flag: true,
-            spriteDisplay: "Shiny",
-            movesIndex: 0,
+          response.data.game_indices.map((elem) => {
+            if (elem.version.name === this.state.gameVersion) {
+              this.setState({
+                pokemon: response.data,
+                flag: true,
+                spriteDisplay: "Shiny",
+                movesIndex: 0,
+              });
+            }
           });
         });
     }
