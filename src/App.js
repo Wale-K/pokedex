@@ -32,8 +32,9 @@ class App extends React.Component {
     allPokemon: null,
     errorMessage: "",
     movesIndex: 0,
-    gameVersion: "rby",
+    gameVersion: "red",
     iscorrectVersion: true,
+    gameVersionPokemon: { red: 1, gold: 152 },
   };
 
   componentDidMount = () => {
@@ -50,11 +51,7 @@ class App extends React.Component {
       });
   };
 
-  setGameVersion = (colour) => {
-    this.setState({ gameVersion: colour }, () =>
-      console.log(this.state.gameVersion)
-    );
-  };
+  setGameVersion = (colour) => {};
 
   resetPokemon = (arg) => {
     axios
@@ -77,15 +74,11 @@ class App extends React.Component {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${nextPokemonId}`)
       .then((response) => {
-        response.data.game_indices.map((elem) => {
-          if (elem.version.name === this.state.gameVersion) {
-            this.setState({
-              pokemon: response.data,
-              flag: true,
-              spriteDisplay: "Shiny",
-              movesIndex: 0,
-            });
-          }
+        this.setState({
+          pokemon: response.data,
+          flag: true,
+          spriteDisplay: "Shiny",
+          movesIndex: 0,
         });
       });
   };
@@ -96,15 +89,11 @@ class App extends React.Component {
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${previousPokemonId}`)
         .then((response) => {
-          response.data.game_indices.map((elem) => {
-            if (elem.version.name === this.state.gameVersion) {
-              this.setState({
-                pokemon: response.data,
-                flag: true,
-                spriteDisplay: "Shiny",
-                movesIndex: 0,
-              });
-            }
+          this.setState({
+            pokemon: response.data,
+            flag: true,
+            spriteDisplay: "Shiny",
+            movesIndex: 0,
           });
         });
     }
@@ -131,11 +120,15 @@ class App extends React.Component {
           `https://pokeapi.co/api/v2/pokemon/${this.state.searchInputValue.toLowerCase()}`
         )
         .then((response) => {
-          this.setState({
-            pokemon: response.data,
-            searchInputValue: "",
-            errorMessage: "",
-          });
+          this.setState(
+            {
+              pokemon: response.data,
+              searchInputValue: "",
+              errorMessage: "",
+              gameVersion: response.data.game_indices[0].version.name,
+            },
+            console.log(this.state.gameVersion)
+          );
         })
         .catch((error) => {
           this.setState({
